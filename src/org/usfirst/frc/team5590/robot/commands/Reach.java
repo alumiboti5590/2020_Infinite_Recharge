@@ -7,10 +7,11 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.Hanger;
 
-public class Reach extends Command {
+public class Reach extends CommandBase {
 //added by matt
 private boolean backButton;
   private boolean leftBumper, rightBumper;
@@ -20,19 +21,24 @@ private boolean backButton;
 
   private boolean reachActivated = false;
 
-  public Reach() {
-    requires(Robot.hanger);
+  private Hanger m_subsystem;
+
+  public Reach(Hanger subsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    m_subsystem = subsystem;
+    addRequirements(m_subsystem);
+    //requires(Robot.hanger); // BRIAN - TODO
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
+  public void initialize() {
     //Robot.hanger.stopReachSolenoid();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  public void execute() {
     xButtonDown = Robot.oi.isAssistXDown();
     xButtonUp = Robot.oi.isAssistXReleased();
     yButtonDown = Robot.oi.isAssistYDown();
@@ -79,7 +85,7 @@ private boolean backButton;
     }
 
   }
-
+/* BRIAN - TODO
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
@@ -96,5 +102,5 @@ private boolean backButton;
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-  }
+  } */
 }

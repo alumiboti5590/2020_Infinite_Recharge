@@ -7,21 +7,21 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.*;
+//import com.ctre.phoenix.motorcontrol.*; // BRIAN cleanup
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.PWMSpeedController;
 //import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.commands.Capacitor;
+//import frc.robot.commands.Capacitor; // BRIAN cleanup
 
 /**
  * Add your docs here.
  */
-public class Intake extends Subsystem {
+public class Intake extends SubsystemBase {
 
   //Intake Constants
   private double intakeSpeed = 0.25;
@@ -42,15 +42,17 @@ public class Intake extends Subsystem {
   private AnalogPotentiometer sensor2 = new AnalogPotentiometer(RobotMap.MAGAZINE_SENSOR_2, 1000);
   private AnalogPotentiometer sensor3 = new AnalogPotentiometer(RobotMap.MAGAZINE_SENSOR_3, 1000);
   
+   public Intake() {
+    //setDefaultCommand(new Capacitor()); // BRIAN moved to robot init
+  }
 
+  /* BRIAN- Replaced
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
     setDefaultCommand(new Capacitor());
-  }
-
-
+  }*/
 
   //Motor Functions
 

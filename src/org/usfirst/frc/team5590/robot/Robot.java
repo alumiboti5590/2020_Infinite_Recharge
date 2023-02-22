@@ -9,13 +9,15 @@ package frc.robot;
 
 //import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Capacitor;
 import frc.robot.subsystems.*;
-import edu.wpi.first.cameraserver.CameraServer;
+//import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.commands.TankDrive;
+import frc.robot.commands.Shoot;
+import frc.robot.commands.Reach;
 
 
 /**
@@ -28,11 +30,11 @@ import frc.robot.commands.TankDrive;
 public class Robot extends TimedRobot {
 
   //Create Subsystems
-  public static DriveTrain driveTrain = new DriveTrain();
-  public static Intake intake = new Intake();
-  public static Shooter shooter = new Shooter();
-  public static Hanger hanger = new Hanger();
-  public static Capacitor capacitor = new Capacitor();
+  public static DriveTrain driveTrain; // = new DriveTrain(); BRIAN moved instantiations
+  public static Intake intake; //= new Intake();
+  public static Shooter shooter; //= new Shooter();
+  public static Hanger hanger; // = new Hanger();
+  public static Capacitor capacitor; //= new Capacitor();
   //public static TankDrive tankDrive = new TankDrive();
   public static OI oi = new OI();
 
@@ -47,10 +49,21 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    driveTrain = new DriveTrain();
+    intake = new Intake();
+    shooter = new Shooter();
+    hanger = new Hanger();
+    //capacitor = new Capacitor();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     //CameraServer.getInstance().startAutomaticCapture();
+
+    // BRIAN default commands should be set here
+    driveTrain.setDefaultCommand(new TankDrive(driveTrain)); 
+    intake.setDefaultCommand(new Capacitor(intake));
+    shooter.setDefaultCommand(new Shoot(shooter));
+    hanger.setDefaultCommand(new Reach(hanger));
   }
 
   /**
@@ -145,7 +158,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    Scheduler.getInstance().run();
+    CommandScheduler.getInstance().run();
   }
 
   @Override

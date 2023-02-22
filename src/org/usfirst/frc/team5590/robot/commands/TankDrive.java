@@ -10,16 +10,17 @@ package frc.robot.commands;
 import frc.robot.Robot;
 import frc.robot.subsystems.DriveTrain;
 
-import javax.xml.namespace.QName;
+//import javax.xml.namespace.QName; // BRIAN cleanup
 
 //import frc.robot.OI;
 //import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class TankDrive extends Command {
+public class TankDrive extends CommandBase {
 
-  private DriveTrain driveTrain = Robot.driveTrain;
+  //private DriveTrain driveTrain = Robot.driveTrain; // BRIAN change to passing in subsystem
+  private DriveTrain m_subsystem;
 
   //DriveTrain Encoder Values
   private int leftEncoder;
@@ -30,27 +31,31 @@ public class TankDrive extends Command {
 
 
   //DifferentialDrive allows a simple, built in tank drive. Uses drive Train Motors
-  private DifferentialDrive robotDrive = new DifferentialDrive(Robot.driveTrain.leftDriveMotor, Robot.driveTrain.rightDriveMotor);
+  //private DifferentialDrive robotDrive = new DifferentialDrive(Robot.driveTrain.leftDriveMotor, Robot.driveTrain.rightDriveMotor);
+  DifferentialDrive robotDrive = new DifferentialDrive(Robot.driveTrain.leftDriveMotor, Robot.driveTrain.rightDriveMotor);
 
   //Xbox Driver Sticks (Y-axis)
   private double leftDriverStick;
   private double rightDriverStick;
 
-  public TankDrive() {
+  public TankDrive(DriveTrain subsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    m_subsystem = subsystem;
+    addRequirements(m_subsystem);
  
-      requires(Robot.driveTrain);
+    //requires(Robot.driveTrain); // BRIAN - TODO
   }
 
 
   @Override
-  protected void initialize() {
+  public void initialize() {
       //Robot.driveTrain.talonMotor1.setSpeed(0);
 
   }
 
   
   @Override
-  protected void execute() {
+  public void execute() {
 
     //UpdateEncoders
     leftEncoder = Robot.driveTrain.getLeftEncoderValue();
@@ -72,7 +77,7 @@ public class TankDrive extends Command {
     //System.out.println(leftDriverStick + ", " + rightDriverStick);
 
   }
-
+/* BRIAN - TODO
   @Override
   protected boolean isFinished() {
     return false;
@@ -90,7 +95,7 @@ public class TankDrive extends Command {
   protected void interrupted() {
     System.out.println("TankDrive interrupted");
     robotDrive.tankDrive(0, 0);
-  }
+  } */
 
   public void testDrive(){
     //robotDrive.tankDrive(0.75, 0.75);

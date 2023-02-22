@@ -8,17 +8,17 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
+//import edu.wpi.first.wpilibj.motorcontrol.Talon; // BRIAN cleanup
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+//import edu.wpi.first.wpilibj.drive.DifferentialDrive; // BRIAN cleanup
 import frc.robot.RobotMap;
-import frc.robot.commands.TankDrive;
+//import frc.robot.commands.TankDrive; // BRIAN cleanup
 
 /**
  * Add your docs here.
  */
-public class DriveTrain extends Subsystem {
+public class DriveTrain extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public PWMVictorSPX leftDriveMotor = new PWMVictorSPX(RobotMap.LEFT_DRIVE_MOTOR);
@@ -29,12 +29,18 @@ public class DriveTrain extends Subsystem {
   private Encoder leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER[0], RobotMap.LEFT_DRIVE_ENCODER[1]);
   private Encoder rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER[0], RobotMap.RIGHT_DRIVE_ENCODER[1]);
 
+  public DriveTrain() {
+    rightDriveMotor.setInverted(true); // BRIAN setting this as right motor was reveresed somehow
+    //setDefaultCommand(new TankDrive()); // BRIAN moved to robot init
+  }
+
+  /* BRIAN- Replaced
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
     setDefaultCommand(new TankDrive());
-  }
+  }*/
 
 
   public int getLeftEncoderValue(){
@@ -52,8 +58,9 @@ public class DriveTrain extends Subsystem {
 
   public void moveStraight(double speed){
       //drive.tankDrive(speed, speed);
-      leftDriveMotor.setSpeed(speed);
-      rightDriveMotor.setSpeed(-speed * 0.9);
+      leftDriveMotor.set(speed);
+      rightDriveMotor.set(speed);
+      //rightDriveMotor.set(-speed * 0.9);
       //System.out.println(" " + leftDriveMotor.getSpeed());
   }
 

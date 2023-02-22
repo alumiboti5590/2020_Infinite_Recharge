@@ -8,13 +8,14 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import com.ctre.phoenix.motorcontrol.*;
+//import com.ctre.phoenix.motorcontrol.*; // BRIAN cleanup
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.commands.Reach;
+//import frc.robot.commands.Reach; // BRIAN cleanup
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
-public class Hanger extends Subsystem {
+public class Hanger extends SubsystemBase {
 
   //Reach Speed
   private double reachMotorSpeed = -0.50;
@@ -22,14 +23,19 @@ public class Hanger extends Subsystem {
 
   private WPI_TalonSRX reachMotor = new WPI_TalonSRX(RobotMap.REACH_MOTOR);
   private WPI_TalonSRX winchMotor = new WPI_TalonSRX(RobotMap.WINCH_MOTOR);
-  private DoubleSolenoid reachSolenoid = new DoubleSolenoid(RobotMap.REACH_SOLENOID[0], RobotMap.REACH_SOLENOID[1]);
+  private DoubleSolenoid reachSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.REACH_SOLENOID[0], RobotMap.REACH_SOLENOID[1]); // BRIAN - Not sure about module type
 
+  public Hanger() {
+    //setDefaultCommand(new Reach()); // BRIAN moved to robot init
+  }
+
+  /* BRIAN- Replaced
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
     setDefaultCommand(new Reach());
-  }
+  }*/
 
   //Winch Motor
   public void retractWinch(){

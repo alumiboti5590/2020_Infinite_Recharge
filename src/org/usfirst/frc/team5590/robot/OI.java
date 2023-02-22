@@ -9,7 +9,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 /**
  * Add your docs here.
@@ -28,26 +27,26 @@ public class OI {
 
     //Driver Sticks
     public double getDriverLeftStick(){
-        return -driveController.getY(Hand.kLeft);
+        return -driveController.getLeftY();
     }
     public double getDriverRightStick(){
-        return -driveController.getY(Hand.kRight);
+        return -driveController.getRightY();
     }
 
     //Driver Triggers
     public double getDriverLeftTrigger(){
-        return driveController.getTriggerAxis(Hand.kLeft);
+        return driveController.getLeftTriggerAxis();
     }
     public double getDriverRightTrigger(){
-        return driveController.getTriggerAxis(Hand.kRight);
+        return driveController.getRightTriggerAxis();
     }
 
     //Driver Bumpers
     public boolean getDriverLeftBumper(){
-        return driveController.getBumper(Hand.kLeft);
+        return driveController.getLeftBumper();
     }
     public boolean getDriverRightBumper(){
-        return driveController.getBumper(Hand.kRight);
+        return driveController.getRightBumper();
     }
 
 
@@ -55,18 +54,18 @@ public class OI {
     
     //Assist Triggers
     public double getAssistLeftTrigger(){
-        return assistantController.getTriggerAxis(Hand.kLeft);
+        return assistantController.getLeftTriggerAxis();
     }
     public double getAssistRightTrigger(){
-        return assistantController.getTriggerAxis(Hand.kRight);
+        return assistantController.getRightTriggerAxis();
     }
 
     //Assistant Bumpers
     public boolean getAssistLeftBumper(){
-        return assistantController.getBumper(Hand.kLeft);
+        return assistantController.getLeftBumper();
     }
     public boolean getAssistRightBumper(){
-        return assistantController.getBumper(Hand.kRight);
+        return assistantController.getRightBumper();
     }
 
     //Assist Buttons

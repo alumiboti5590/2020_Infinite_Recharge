@@ -7,29 +7,35 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Shooter;
 import frc.robot.Robot;
 
-public class Shoot extends Command {
+public class Shoot extends CommandBase {
+
+  private Shooter m_subsystem;
 
   //Assistant Controller Triggers
   private double leftTrigger;
   private double rightTrigger;
   private boolean AButton, BButton;
 
-  public Shoot() {
-    requires(Robot.shooter);
+  public Shoot(Shooter subsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    m_subsystem = subsystem;
+    addRequirements(m_subsystem);
+    //requires(Robot.shooter); // BRIAN - TODO
   }
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
+  public void initialize() {
     Robot.shooter.lowerShoot();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  public void execute() {
     //Assistant Triggers
     leftTrigger = Robot.oi.getAssistLeftTrigger();
     rightTrigger = Robot.oi.getAssistRightTrigger();
@@ -56,7 +62,7 @@ public class Shoot extends Command {
     }
 
   }
-
+/* BRIAN - TODO
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
@@ -73,5 +79,5 @@ public class Shoot extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-  }
+  } */
 }

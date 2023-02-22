@@ -7,16 +7,19 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Intake;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; // BRIAN cleanup
 import frc.robot.Robot;
 
-public class Capacitor extends Command {
+public class Capacitor extends CommandBase {
 
 //** NAME VARIABLES BETTER!!! */
 
   //Semi-Auto Capacitor Variables
     public static boolean SemiAuto = true;
+
+    private Intake m_subsystem;
 
     public boolean intaking = false;
 
@@ -45,13 +48,15 @@ public class Capacitor extends Command {
   private boolean leftBumper, pressedBumper = false;
 
 
-  public Capacitor() {
-    
-    requires(Robot.intake);
+  public Capacitor(Intake subsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    m_subsystem = subsystem;
+    addRequirements(m_subsystem);
+    //requires(Robot.intake); // BRIAN - TODO
   }
 
   @Override
-  protected void initialize() {
+  public void initialize() {
     //Driver Trigger Values
     leftTrigger = Robot.oi.getDriverLeftTrigger();
     rightTrigger = Robot.oi.getDriverRightTrigger();
@@ -65,7 +70,7 @@ public class Capacitor extends Command {
   }
 
   @Override
-  protected void execute() {
+  public void execute() {
 
     //Driver Triggers
     leftTrigger = Robot.oi.getDriverLeftTrigger();
@@ -277,7 +282,7 @@ public class Capacitor extends Command {
 
 
 
-
+/* BRIAN - TODO
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -294,5 +299,5 @@ public class Capacitor extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-  }
+  }*/
 }
